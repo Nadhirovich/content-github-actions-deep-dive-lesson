@@ -80,12 +80,17 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
-      - name: Create test function  
-        run: |  
-          aws lambda create-function --function-name test-function \  
-            --code "S3Bucket=my-bucket-1a2sd1gy,S3Key=${{ github.repository }}/${{ github.sha }}.zip" \  
-            --handler lambda_function.lambda_handler --runtime python3.9 \  
-            --role arn:aws:iam::543476919432:role/my-lambda-role
+      - name: Set environment variables
+        run: |
+          echo "REPO_PATH=Nadhirovich/content-github-actions-deep-dive-lesson" >> $GITHUB_ENV
+          echo "COMMIT_SHA=${{ github.sha }}" >> $GITHUB_ENV
+
+      - name: Create test function
+        run: |
+          aws lambda create-function --function-name test-function \
+           --code S3Bucket=my-bucket-1a2sd1gy,S3Key=${REPO_PATH}/${COMMIT_SHA}.zip \
+           --handler lambda_function.lambda_handler --runtime python3.9 \
+           --role arn:aws:iam::543476919432:role/my-lambda-role
       - name: Wait 30 seconds  
         run: sleep 30  
       - name: Destroy test function  
