@@ -11,6 +11,6 @@ def lambda_handler(event, context):
     print('Starting functions\n---------------------------------------------')
 
      if event["input"] == "Hello":
-        return "World"
-    else:
-        raise ValueError("Invalid input: Only 'Hello' is supported.")
+         return "World"
+     else:
+         raise ValueError("Invalid input: Only 'Hello' is supported.")
