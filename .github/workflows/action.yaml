@@ -3,7 +3,7 @@ name: Deploy my Lambda Function
 # trigger on all push events to main branch
 on: 
   workflow_run:
-    workflows: [codeql]
+    workflows: [CodeQL Advanced]
     types:
       - completed
 
